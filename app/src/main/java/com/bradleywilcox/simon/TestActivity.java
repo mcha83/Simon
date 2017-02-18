@@ -40,6 +40,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        cancelTimer();
 
         if(view == btnStart){
             simon = new Simon();
@@ -66,6 +67,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 // all guesses where correct, add another to simon
                 simon.addToPattern();
                 startSimonRunner();
+            }else{
+                //it was a correct guess, so start timer over
+                startTimer();
             }
         }
     }
@@ -77,6 +81,20 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
         simonRunner = new SimonRunner(this, simon);
         simonRunner.execute();
+    }
+
+    private void startTimer(){
+        cancelTimer();
+        //default 5 seconds, may change for other game modes
+        timer = new Timer(this, 5);
+        timer.execute();
+    }
+
+    private void cancelTimer(){
+        if(timer != null) {
+            timer.cancel(true);
+            timer = null;
+        }
     }
 
 
@@ -105,6 +123,6 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void runnerDone(){
-
+       // startTimer();
     }
 }

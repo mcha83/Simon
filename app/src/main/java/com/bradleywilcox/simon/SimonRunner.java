@@ -23,6 +23,9 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
     protected Void doInBackground(Void... voids){
 
         for(int p : simon.getPattern()) {
+            if(isCancelled())
+                return null;
+
             try {
                 Log.i("SIMON", p + "");
 
@@ -34,7 +37,7 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
                 // time to pause after turning button 'OFF' before turning next one 'ON'
                 Thread.sleep(500);
 
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
 
             }
         }
@@ -42,6 +45,15 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
         Log.i("SIMON", "____________________");
 
         return null;
+    }
+
+    @Override
+    protected  void onPreExecute(){
+        try {
+            Thread.sleep(1000);
+        }catch(InterruptedException e){
+
+        }
     }
 
     @Override
@@ -53,7 +65,7 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
     protected void onPostExecute(Void v){
         super.onPostExecute(v);
 
-
+        activity.runnerDone();
     }
 
 
