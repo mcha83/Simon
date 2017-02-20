@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
-    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart;
+    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart, btnStartReverse;
     private Simon simon;
     private SimonRunner simonRunner;
     private Timer timer;
@@ -24,6 +24,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnYellow = (Button)findViewById(R.id.button3);
         btnBlue = (Button)findViewById(R.id.button4);
         btnStart = (Button)findViewById(R.id.btnStart);
+        btnStartReverse = (Button)findViewById(R.id.btnStartReverse);
 
         btnGreen.setBackgroundColor(Color.WHITE);
         btnRed.setBackgroundColor(Color.WHITE);
@@ -35,6 +36,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnYellow.setOnClickListener(this);
         btnBlue.setOnClickListener(this);
         btnStart.setOnClickListener(this);
+        btnStartReverse.setOnClickListener(this);
 
     }
 
@@ -43,8 +45,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         cancelTimer();
 
         if(view == btnStart){
-            simon = new Simon();
-
+            simon = new Simon(Simon.GameMode.normal);
+            startSimonRunner();
+        }
+        else if(view == btnStartReverse){
+            simon = new Simon(Simon.GameMode.backwards);
             startSimonRunner();
         }
         else {
