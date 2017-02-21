@@ -13,10 +13,19 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
 
     private Simon simon;
     private ISimonActivity activity;
+    private int buttonOnTime;
+    private int buttonOffTime;
 
     public SimonRunner(ISimonActivity activity, Simon simon){
         this.activity = activity;
         this.simon = simon;
+        if(simon.getGameMode() == Simon.GameMode.turbo){
+            buttonOnTime = 250;
+            buttonOffTime = 125;
+        }else{
+            buttonOnTime = 1000;
+            buttonOffTime = 500;
+        }
     }
 
     @Override
@@ -31,11 +40,11 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
 
                 publishProgress(p);
                 // time to display the button 'ON'
-                Thread.sleep(1000);
+                Thread.sleep(buttonOnTime);
 
                 publishProgress(-1);
                 // time to pause after turning button 'OFF' before turning next one 'ON'
-                Thread.sleep(500);
+                Thread.sleep(buttonOffTime);
 
             } catch (InterruptedException e) {
 

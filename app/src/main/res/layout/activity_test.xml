@@ -11,16 +11,6 @@
     tools:context="com.bradleywilcox.simon.TestActivity">
 
     <Button
-        android:text="Reverse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="46dp"
-        android:id="@+id/btnStartReverse" />
-
-    <Button
         android:text="Green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,4 +53,21 @@
         android:id="@+id/btnStart"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/btnStartReverse" />
+
+    <Button
+        android:text="Turbo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="62dp"
+        android:id="@+id/btnStartTurbo"
+        android:layout_below="@+id/btnStartReverse"
+        android:layout_alignStart="@+id/button" />
+
+    <Button
+        android:text="Reverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStartReverse"
+        android:layout_below="@+id/btnStart"
+        android:layout_alignStart="@+id/btnStartTurbo" />
 </RelativeLayout>

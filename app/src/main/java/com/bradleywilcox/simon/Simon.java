@@ -50,7 +50,7 @@ public class Simon {
     }
 
     public boolean isPressCorrect(Buttons button){
-        if(mode == GameMode.normal)
+        if(mode == GameMode.normal || mode == GameMode.turbo)
             return isPressCorrectNormal(button);
 
         if(mode == GameMode.backwards)
@@ -93,5 +93,8 @@ public class Simon {
         return isPlayersTurnOver;
     }
 
+    public GameMode getGameMode(){
+        return this.mode;
+    }
 
 }

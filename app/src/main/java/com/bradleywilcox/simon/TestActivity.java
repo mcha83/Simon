@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
-    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart, btnStartReverse;
+    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart, btnStartReverse, btnStartTurbo;
     private Simon simon;
     private SimonRunner simonRunner;
     private Timer timer;
@@ -25,6 +25,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnBlue = (Button)findViewById(R.id.button4);
         btnStart = (Button)findViewById(R.id.btnStart);
         btnStartReverse = (Button)findViewById(R.id.btnStartReverse);
+        btnStartTurbo = (Button)findViewById(R.id.btnStartTurbo);
 
         btnGreen.setBackgroundColor(Color.WHITE);
         btnRed.setBackgroundColor(Color.WHITE);
@@ -37,6 +38,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnBlue.setOnClickListener(this);
         btnStart.setOnClickListener(this);
         btnStartReverse.setOnClickListener(this);
+        btnStartTurbo.setOnClickListener(this);
 
     }
 
@@ -50,6 +52,10 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(view == btnStartReverse){
             simon = new Simon(Simon.GameMode.backwards);
+            startSimonRunner();
+        }
+        else if(view == btnStartTurbo){
+            simon = new Simon(Simon.GameMode.turbo);
             startSimonRunner();
         }
         else {
@@ -90,8 +96,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startTimer(){
         cancelTimer();
-        //default 5 seconds, may change for other game modes
-        timer = new Timer(this, 5);
+        // 5 seconds for normal modes, 1 second for turbo mode
+        timer = new Timer(this, simon.getGameMode() == Simon.GameMode.turbo ? 1 : 5);
         timer.execute();
     }
 
@@ -128,6 +134,6 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void runnerDone(){
-       // startTimer();
+       startTimer();
     }
 }
