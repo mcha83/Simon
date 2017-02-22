@@ -32,6 +32,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnYellow.setBackgroundColor(Color.WHITE);
         btnBlue.setBackgroundColor(Color.WHITE);
 
+        btnGreen.setVisibility(View.INVISIBLE);
+        btnYellow.setVisibility(View.INVISIBLE);
+        btnRed.setVisibility(View.INVISIBLE);
+        btnBlue.setVisibility(View.INVISIBLE);
+
         btnGreen.setOnClickListener(this);
         btnRed.setOnClickListener(this);
         btnYellow.setOnClickListener(this);
@@ -47,14 +52,38 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         cancelTimer();
 
         if(view == btnStart){
+            btnGreen.setVisibility(View.VISIBLE);
+            btnYellow.setVisibility(View.VISIBLE);
+            btnRed.setVisibility(View.VISIBLE);
+            btnBlue.setVisibility(View.VISIBLE);
+            btnStart.setVisibility(View.INVISIBLE);
+            btnStartReverse.setVisibility(View.INVISIBLE);
+            btnStartTurbo.setVisibility(View.INVISIBLE);
+
             simon = new Simon(Simon.GameMode.normal);
             startSimonRunner();
         }
         else if(view == btnStartReverse){
+            btnGreen.setVisibility(View.VISIBLE);
+            btnYellow.setVisibility(View.VISIBLE);
+            btnRed.setVisibility(View.VISIBLE);
+            btnBlue.setVisibility(View.VISIBLE);
+            btnStart.setVisibility(View.INVISIBLE);
+            btnStartReverse.setVisibility(View.INVISIBLE);
+            btnStartTurbo.setVisibility(View.INVISIBLE);
+
             simon = new Simon(Simon.GameMode.backwards);
             startSimonRunner();
         }
         else if(view == btnStartTurbo){
+            btnGreen.setVisibility(View.VISIBLE);
+            btnYellow.setVisibility(View.VISIBLE);
+            btnRed.setVisibility(View.VISIBLE);
+            btnBlue.setVisibility(View.VISIBLE);
+            btnStart.setVisibility(View.INVISIBLE);
+            btnStartReverse.setVisibility(View.INVISIBLE);
+            btnStartTurbo.setVisibility(View.INVISIBLE);
+
             simon = new Simon(Simon.GameMode.turbo);
             startSimonRunner();
         }
