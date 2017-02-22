@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
-    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart;
+    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart, btnStartReverse, btnStartTurbo;
     private Simon simon;
     private SimonRunner simonRunner;
     private Timer timer;
@@ -24,6 +24,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnYellow = (Button)findViewById(R.id.button3);
         btnBlue = (Button)findViewById(R.id.button4);
         btnStart = (Button)findViewById(R.id.btnStart);
+        btnStartReverse = (Button)findViewById(R.id.btnStartReverse);
+        btnStartTurbo = (Button)findViewById(R.id.btnStartTurbo);
 
         btnGreen.setBackgroundColor(Color.WHITE);
         btnRed.setBackgroundColor(Color.WHITE);
@@ -35,15 +37,25 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnYellow.setOnClickListener(this);
         btnBlue.setOnClickListener(this);
         btnStart.setOnClickListener(this);
+        btnStartReverse.setOnClickListener(this);
+        btnStartTurbo.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
+        cancelTimer();
 
         if(view == btnStart){
-            simon = new Simon();
-
+            simon = new Simon(Simon.GameMode.normal);
+            startSimonRunner();
+        }
+        else if(view == btnStartReverse){
+            simon = new Simon(Simon.GameMode.backwards);
+            startSimonRunner();
+        }
+        else if(view == btnStartTurbo){
+            simon = new Simon(Simon.GameMode.turbo);
             startSimonRunner();
         }
         else {
@@ -66,6 +78,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 // all guesses where correct, add another to simon
                 simon.addToPattern();
                 startSimonRunner();
+            }else{
+                //it was a correct guess, so start timer over
+                startTimer();
             }
         }
     }
@@ -77,6 +92,20 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
         simonRunner = new SimonRunner(this, simon);
         simonRunner.execute();
+    }
+
+    private void startTimer(){
+        cancelTimer();
+        // 5 seconds for normal modes, 1 second for turbo mode
+        timer = new Timer(this, simon.getGameMode() == Simon.GameMode.turbo ? 1 : 5);
+        timer.execute();
+    }
+
+    private void cancelTimer(){
+        if(timer != null) {
+            timer.cancel(true);
+            timer = null;
+        }
     }
 
 
@@ -105,6 +134,6 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void runnerDone(){
-
+       startTimer();
     }
 }

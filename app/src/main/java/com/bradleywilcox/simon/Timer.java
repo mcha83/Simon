@@ -12,21 +12,25 @@ import android.util.Log;
 public class Timer extends AsyncTask<Void, Void, Void> {
 
     ISimonActivity activity;
+    private int seconds;
 
-    public Timer(ISimonActivity activity){
+    public Timer(ISimonActivity activity, int seconds){
         this.activity = activity;
+        this.seconds = seconds;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < seconds; i++){
+            if(isCancelled())
+                return null;
 
             try {
                 Thread.sleep(1000);
                 Log.i("TIME", i+1 + " Seconds");
 
-            }catch(Exception e){
+            }catch(InterruptedException e){
 
             }
 
