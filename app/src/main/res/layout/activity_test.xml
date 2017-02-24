@@ -12,69 +12,6 @@
     android:background="@color/back"
     tools:context="com.bradleywilcox.simon.TestActivity">
 
-    <Button
-        android:text="Blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button4"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_alignStart="@+id/button2" />
-
-    <Button
-        android:text="Yellow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:id="@+id/button3"
-        android:layout_below="@+id/button"
-        android:layout_alignStart="@+id/button" />
-
-    <Button
-        android:text="Red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:id="@+id/button2"
-        android:layout_above="@+id/button3"
-        android:layout_toEndOf="@+id/button" />
-
-    <Button
-        android:text="Green"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Turbo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnStartTurbo"
-        android:layout_alignBaseline="@+id/button4"
-        android:layout_alignBottom="@+id/button4"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Reverse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnStartReverse"
-        android:layout_above="@+id/button4"
-        android:layout_alignStart="@+id/btnStartTurbo"
-        android:layout_marginBottom="11dp" />
-
-    <Button
-        android:text="Normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnStart"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignStart="@+id/btnStartReverse" />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="150dp"
@@ -94,13 +31,107 @@
         android:layout_alignStart="@+id/imageView"
         android:layout_marginBottom="17dp" />
 
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/rbNormal"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true">
+
+        <RadioButton
+            android:text="Normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbNormal"
+            android:textColor="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:checked="false"
+            android:layout_alignBottom="@+id/rbTurbo"
+            android:layout_alignStart="@+id/tvScore" />
+
+        <RadioButton
+            android:text="Reverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbReverse"
+            android:textColor="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:checked="false"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true" />
+
+        <RadioButton
+            android:text="Turbo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbTurbo"
+            android:textColor="@android:color/white"
+            android:buttonTint="@android:color/white"
+            android:checked="false"
+            android:layout_below="@+id/imageView"
+            android:layout_alignStart="@+id/tvHighScore" />
+
+    </RadioGroup>
+
+    <Button
+        android:text="Yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:layout_alignBaseline="@+id/button4"
+        android:layout_alignBottom="@+id/button4"
+        android:layout_alignStart="@+id/button" />
+
     <TextView
         android:text="High Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvScore"
-        android:layout_toEndOf="@+id/btnStartTurbo"
-        android:layout_marginStart="19dp"
         android:id="@+id/tvHighScore"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:layout_alignBaseline="@+id/tvScore"
+        android:layout_alignBottom="@+id/tvScore"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_marginEnd="28dp" />
+
+    <Button
+        android:text="Green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_marginTop="89dp"
+        android:layout_below="@+id/radioGroup2"
+        android:layout_alignStart="@+id/radioGroup2" />
+
+    <Button
+        android:text="Blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:layout_below="@+id/button2"
+        android:layout_alignEnd="@+id/radioGroup2"
+        android:layout_marginTop="35dp" />
+
+    <Button
+        android:text="Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStart"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@+id/radioGroup2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp" />
+
+    <Button
+        android:text="Red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignStart="@+id/button4" />
+
+
 </RelativeLayout>

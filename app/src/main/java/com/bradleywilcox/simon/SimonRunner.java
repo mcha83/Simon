@@ -63,15 +63,6 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
-    protected  void onPreExecute(){
-        ///try {
-         //   Thread.sleep(1000);
-       // }catch(InterruptedException e){
-
-       // }
-    }
-
-    @Override
     protected void onProgressUpdate(Integer... values){
         activity.updateButtons(values[0]);
     }

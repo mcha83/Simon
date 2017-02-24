@@ -47,11 +47,6 @@ public class Player implements Serializable{
         return highScores[mode.ordinal()];
     }
 
-    public void show(Simon.GameMode mode){
-        Log.i("STUFF", highScores[mode.ordinal()] + "");
-    }
-
-
     // Save serializable data to file
     public void Save(Context context){
         try {
