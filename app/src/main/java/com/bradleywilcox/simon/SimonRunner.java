@@ -31,6 +31,12 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
     @Override
     protected Void doInBackground(Void... voids){
 
+        try {
+            Thread.sleep(1000);
+        }catch(InterruptedException e){
+
+        }
+
         for(int p : simon.getPattern()) {
             if(isCancelled())
                 return null;
@@ -54,15 +60,6 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
         Log.i("SIMON", "____________________");
 
         return null;
-    }
-
-    @Override
-    protected  void onPreExecute(){
-        try {
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-
-        }
     }
 
     @Override
