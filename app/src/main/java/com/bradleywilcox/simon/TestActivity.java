@@ -6,13 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
     Button btnGreen, btnRed, btnYellow, btnBlue, btnStart, btnStartReverse, btnStartTurbo;
+    TextView tvScore, tvHighScore;
     private Simon simon;
     private SimonRunner simonRunner;
     private Timer timer;
+    private Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnStart = (Button)findViewById(R.id.btnStart);
         btnStartReverse = (Button)findViewById(R.id.btnStartReverse);
         btnStartTurbo = (Button)findViewById(R.id.btnStartTurbo);
+
+        tvScore = (TextView) findViewById(R.id.tvScore);
+        tvHighScore = (TextView) findViewById(R.id.tvHighScore);
 
         btnGreen.setBackgroundColor(Color.WHITE);
         btnRed.setBackgroundColor(Color.WHITE);
@@ -45,6 +53,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnStartReverse.setOnClickListener(this);
         btnStartTurbo.setOnClickListener(this);
 
+        player = Player.loadPlayer(this);
     }
 
     @Override
@@ -61,6 +70,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             btnStartTurbo.setVisibility(View.INVISIBLE);
 
             simon = new Simon(Simon.GameMode.normal);
+            player.resetScore();
+
+            setScoreDisplay(0);
+            setHighScoreDisplay(player.getHighScore(simon.getGameMode()));
+
             startSimonRunner();
         }
         else if(view == btnStartReverse){
@@ -73,6 +87,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             btnStartTurbo.setVisibility(View.INVISIBLE);
 
             simon = new Simon(Simon.GameMode.backwards);
+            player.resetScore();
+
+            setScoreDisplay(0);
+            setHighScoreDisplay(player.getHighScore(simon.getGameMode()));
+
             startSimonRunner();
         }
         else if(view == btnStartTurbo){
@@ -85,6 +104,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             btnStartTurbo.setVisibility(View.INVISIBLE);
 
             simon = new Simon(Simon.GameMode.turbo);
+            player.resetScore();
+
+            setScoreDisplay(0);
+            setHighScoreDisplay(player.getHighScore(simon.getGameMode()));
+
             startSimonRunner();
         }
         else {
@@ -106,12 +130,21 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             }else if(simon.isPlayerTurnOver()){
                 // all guesses where correct, add another to simon
                 simon.addToPattern();
+                player.incrementScore();
+                player.setHighScore(simon.getGameMode());
                 startSimonRunner();
+
+                setScoreDisplay(player.getCurrentScore());
+                setHighScoreDisplay(player.getHighScore(simon.getGameMode()));
+
             }else{
                 //it was a correct guess, so start timer over
                 startTimer();
             }
         }
+
+        player.show(simon.getGameMode());
+
     }
 
     private void startSimonRunner(){
@@ -135,6 +168,14 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             timer.cancel(true);
             timer = null;
         }
+    }
+
+    private void setScoreDisplay(int score){
+        tvScore.setText("Score " + score);
+    }
+
+    private void setHighScoreDisplay(int score){
+        tvHighScore.setText("High Score " + score);
     }
 
 
@@ -164,5 +205,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void runnerDone(){
        startTimer();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        player.Save(this);
     }
 }
