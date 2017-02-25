@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Simon</string>
+    <string name="howto">SIMON will give the first signal. Repeat the signal by pressing the same lens. SIMON will duplicate the first signal and will add one.
+Repeat these two signals by pressing the same lenses. SIMON will duplicate these first two signals and add one.Continue in this manner as long as you can repeat each se-quence of signals correctly.
+Notice that after the 5th, 9th and 13th signals in a sequence, SIMON automatically increases the tempo. If you fail to repeat a sequence exactly or if you take more than 5 seconds to repeat a signal, SIMON responds with a
+"RAZZ" sound; you have lost, and this sequence of signals is over.  </string>
+
 </resources>
