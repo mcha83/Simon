@@ -82,18 +82,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
-                btnGreen.setImageResource(R.drawable.grnbri);
-                //add pauses//
-
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
-                btnRed.setImageResource(R.drawable.redbri);
             } else if (view == btnYellow) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
-                btnYellow.setImageResource(R.drawable.yelbri);
             } else if (view == btnBlue) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
-                btnBlue.setImageResource(R.drawable.blubri);
             }
 
             if(!isCorrect){
@@ -171,10 +165,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void resetAllButtonDisplays(){
-        btnGreen.setImageResource(R.drawable.grndul);
-        btnRed.setImageResource(R.drawable.reddul);
-        btnYellow.setImageResource(R.drawable.yeldul);
-        btnBlue.setImageResource(R.drawable.bludul);
+        btnGreen.setImageResource(R.drawable.green_selector);
+        btnRed.setImageResource(R.drawable.red_selector);
+        btnYellow.setImageResource(R.drawable.yellow_selector);
+        btnBlue.setImageResource(R.drawable.blue_selector);
     }
 
     @Override

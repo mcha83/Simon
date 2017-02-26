@@ -43,7 +43,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/grndul"
+            app:srcCompat="@drawable/green_selector"
             android:id="@+id/imageButton"
             android:background="@color/back"
             />
@@ -51,7 +51,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/yeldul"
+            app:srcCompat="@drawable/yellow_selector"
             android:background="@color/back"
             android:id="@+id/imageButton4"
             android:layout_below="@+id/imageButton"
@@ -60,7 +60,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/reddul"
+            app:srcCompat="@drawable/red_selector"
             android:id="@+id/imageButton2"
             android:background="@color/back"
             android:layout_toRightOf="@+id/imageButton"
@@ -70,7 +70,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bludul"
+            app:srcCompat="@drawable/blue_selector"
             android:id="@+id/imageButton3"
             android:background="@color/back"
             android:layout_below="@+id/imageButton2"
