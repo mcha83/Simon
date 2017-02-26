@@ -46,6 +46,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnBlue.setOnClickListener(this);
         btnStart.setOnClickListener(this);
 
+        disableSimonButtons();
+
         player = Player.loadPlayer(this);
     }
 
@@ -111,6 +113,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startSimonRunner(){
+        disableSimonButtons();
+
         if(simonRunner != null && simonRunner.getStatus() == AsyncTask.Status.FINISHED) {
             simonRunner = null;
         }
@@ -171,6 +175,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnBlue.setImageResource(R.drawable.blue_selector);
     }
 
+    private void disableSimonButtons(){
+        btnGreen.setClickable(false);
+        btnRed.setClickable(false);
+        btnYellow.setClickable(false);
+        btnBlue.setClickable(false);
+    }
+
+    private void enableSimonButtons(){
+        btnGreen.setClickable(true);
+        btnRed.setClickable(true);
+        btnYellow.setClickable(true);
+        btnBlue.setClickable(true);
+    }
+
     @Override
     public void timerDone(){
         Toast.makeText(this, "Time up, YOU LOSE", Toast.LENGTH_LONG).show();
@@ -178,7 +196,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void runnerDone(){
-       startTimer();
+        enableSimonButtons();
+        startTimer();
     }
 
     @Override
