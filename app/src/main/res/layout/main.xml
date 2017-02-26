@@ -152,5 +152,21 @@
         android:layout_below="@+id/imageButton2"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:text="About"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageButton4"
+        android:layout_alignStart="@+id/btnStart"
+        android:id="@+id/button8" />
+
+    <Button
+        android:text="Quit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button8"
+        android:layout_alignStart="@+id/tvHighScore"
+        android:id="@+id/button9" />
+
 
 </RelativeLayout>

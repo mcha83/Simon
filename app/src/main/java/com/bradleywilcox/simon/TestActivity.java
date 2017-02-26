@@ -3,6 +3,7 @@ package com.bradleywilcox.simon;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import org.w3c.dom.Text;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
     ImageButton btnGreen, btnRed, btnYellow, btnBlue;
-    Button btnStart, btnhowTo, btnBegn;
+    Button btnStart, btnhowTo, btnBegn, btnAbout, btnQuit;
     RadioButton rbNormal, rbReverse, rbTurbo;
     TextView tvScore, tvHighScore;
     private Simon simon;
@@ -38,12 +39,15 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnStart = (Button)findViewById(R.id.btnStart);
         btnBegn = (Button)findViewById(R.id.button6);
         btnhowTo = (Button)findViewById(R.id.button7);
+        btnAbout = (Button)findViewById(R.id.button8);
+        btnQuit = (Button)findViewById(R.id.button9);
 
         btnGreen.setVisibility(View.INVISIBLE);
         btnRed.setVisibility(View.INVISIBLE);
         btnBlue.setVisibility(View.INVISIBLE);
         btnYellow.setVisibility(View.INVISIBLE);
         btnStart.setVisibility(View.INVISIBLE);
+        btnQuit.setVisibility(View.INVISIBLE);
 
         tvScore = (TextView) findViewById(R.id.tvScore);
         tvHighScore = (TextView) findViewById(R.id.tvHighScore);
@@ -65,6 +69,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         btnStart.setOnClickListener(this);
         btnBegn.setOnClickListener(this);
         btnhowTo.setOnClickListener(this);
+        btnAbout.setOnClickListener(this);
+        btnQuit.setOnClickListener(this);
 
         player = Player.loadPlayer(this);
     }
@@ -119,6 +125,15 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             rbNormal.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.VISIBLE);
             btnhowTo.setVisibility(View.INVISIBLE);
+            btnAbout.setVisibility(View.INVISIBLE);
+        }
+        else if(view==btnAbout)
+        {
+            startActivity(new Intent(this, About.class));
+        }
+        else if(view==btnQuit)
+        {
+            startActivity(new Intent(this, TestActivity.class));
         }
 
         else {
@@ -128,21 +143,39 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
                 btnGreen.setImageResource(R.drawable.grnbri);
-                //add pauses//
+                //pause//
+                btnGreen.setImageResource(R.drawable.grndul);
 
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
                 btnRed.setImageResource(R.drawable.redbri);
+                //pause//
+                btnRed.setImageResource(R.drawable.reddul);
+
             } else if (view == btnYellow) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
                 btnYellow.setImageResource(R.drawable.yelbri);
+                //pause//
+                btnYellow.setImageResource(R.drawable.yeldul);
+
             } else if (view == btnBlue) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
                 btnBlue.setImageResource(R.drawable.blubri);
-            }
+                //pause//
+                btnBlue.setImageResource(R.drawable.bludul);
 
+            }
             if(!isCorrect){
                 Toast.makeText(this, "Wrong Guess, You Lose", Toast.LENGTH_LONG).show();
+                cancelTimer();
+                cancelSimonRunner();
+
+                btnGreen.setVisibility(View.INVISIBLE);
+                btnRed.setVisibility(View.INVISIBLE);
+                btnBlue.setVisibility(View.INVISIBLE);
+                btnYellow.setVisibility(View.INVISIBLE);
+                btnQuit.setVisibility(View.VISIBLE);
+
             }else if(simon.isPlayerTurnOver()){
                 // all guesses where correct, add another to simon
                 simon.addToPattern();
