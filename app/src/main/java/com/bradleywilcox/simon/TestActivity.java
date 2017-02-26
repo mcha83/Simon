@@ -1,5 +1,6 @@
 package com.bradleywilcox.simon;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -7,14 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
-    Button btnGreen, btnRed, btnYellow, btnBlue, btnStart;
+    ImageButton btnGreen, btnRed, btnYellow, btnBlue;
+    Button btnStart, btnhowTo, btnBegn;
     RadioButton rbNormal, rbReverse, rbTurbo;
     TextView tvScore, tvHighScore;
     private Simon simon;
@@ -25,31 +29,42 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.main);
 
-        btnGreen = (Button)findViewById(R.id.button);
-        btnRed = (Button)findViewById(R.id.button2);
-        btnYellow = (Button)findViewById(R.id.button3);
-        btnBlue = (Button)findViewById(R.id.button4);
+        btnGreen = (ImageButton)findViewById(R.id.imageButton);
+        btnRed = (ImageButton)findViewById(R.id.imageButton2);
+        btnYellow = (ImageButton)findViewById(R.id.imageButton4);
+        btnBlue = (ImageButton)findViewById(R.id.imageButton3);
         btnStart = (Button)findViewById(R.id.btnStart);
+        btnBegn = (Button)findViewById(R.id.button6);
+        btnhowTo = (Button)findViewById(R.id.button7);
+
+        btnGreen.setVisibility(View.INVISIBLE);
+        btnRed.setVisibility(View.INVISIBLE);
+        btnBlue.setVisibility(View.INVISIBLE);
+        btnYellow.setVisibility(View.INVISIBLE);
+        btnStart.setVisibility(View.INVISIBLE);
 
         tvScore = (TextView) findViewById(R.id.tvScore);
         tvHighScore = (TextView) findViewById(R.id.tvHighScore);
+        tvScore.setVisibility(View.INVISIBLE);
+        tvHighScore.setVisibility(View.INVISIBLE);
 
         rbNormal = (RadioButton) findViewById(R.id.rbNormal);
         rbReverse = (RadioButton) findViewById(R.id.rbReverse);
         rbTurbo = (RadioButton) findViewById(R.id.rbTurbo);
+        rbNormal.setVisibility(View.INVISIBLE);
+        rbReverse.setVisibility(View.INVISIBLE);
+        rbTurbo.setVisibility(View.INVISIBLE);
 
-        btnGreen.setBackgroundColor(Color.WHITE);
-        btnRed.setBackgroundColor(Color.WHITE);
-        btnYellow.setBackgroundColor(Color.WHITE);
-        btnBlue.setBackgroundColor(Color.WHITE);
 
         btnGreen.setOnClickListener(this);
         btnRed.setOnClickListener(this);
         btnYellow.setOnClickListener(this);
         btnBlue.setOnClickListener(this);
         btnStart.setOnClickListener(this);
+        btnBegn.setOnClickListener(this);
+        btnhowTo.setOnClickListener(this);
 
         player = Player.loadPlayer(this);
     }
@@ -58,9 +73,22 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         cancelTimer();
 
+
         if(view == btnStart){
             resetAllButtonDisplays();
             cancelSimonRunner();
+
+            btnStart.setVisibility(View.INVISIBLE);
+            rbNormal.setVisibility(View.INVISIBLE);
+            rbTurbo.setVisibility(View.INVISIBLE);
+            rbReverse.setVisibility(View.INVISIBLE);
+            btnGreen.setVisibility(View.VISIBLE);
+            btnRed.setVisibility(View.VISIBLE);
+            btnBlue.setVisibility(View.VISIBLE);
+            btnYellow.setVisibility(View.VISIBLE);
+            tvScore.setVisibility(View.VISIBLE);
+            tvHighScore.setVisibility(View.VISIBLE);
+
 
             if(rbNormal.isChecked()){
                 simon = new Simon(Simon.GameMode.normal);
@@ -79,6 +107,19 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
             startSimonRunner();
         }
+        else if(view==btnhowTo)
+        {
+            startActivity(new Intent(this, howto.class));
+        }
+        else if(view==btnBegn)
+        {
+            btnBegn.setVisibility(View.INVISIBLE);
+            rbTurbo.setVisibility(View.VISIBLE);
+            rbReverse.setVisibility(View.VISIBLE);
+            rbNormal.setVisibility(View.VISIBLE);
+            btnStart.setVisibility(View.VISIBLE);
+            btnhowTo.setVisibility(View.INVISIBLE);
+        }
 
         else {
 
@@ -86,12 +127,18 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
+                btnGreen.setImageResource(R.drawable.grnbri);
+                //add pauses//
+
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
+                btnRed.setImageResource(R.drawable.redbri);
             } else if (view == btnYellow) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
+                btnYellow.setImageResource(R.drawable.yelbri);
             } else if (view == btnBlue) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
+                btnBlue.setImageResource(R.drawable.blubri);
             }
 
             if(!isCorrect){
@@ -156,23 +203,23 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void updateButtons(int button) {
         if(button == Simon.Buttons.green.ordinal())
-            btnGreen.setBackgroundColor(Color.GREEN);
+            btnGreen.setImageResource(R.drawable.grnbri);
         else if(button == Simon.Buttons.red.ordinal())
-            btnRed.setBackgroundColor(Color.RED);
+            btnRed.setImageResource(R.drawable.redbri);
         else if(button == Simon.Buttons.yellow.ordinal())
-            btnYellow.setBackgroundColor(Color.YELLOW);
+            btnYellow.setImageResource(R.drawable.yelbri);
         else if(button == Simon.Buttons.blue.ordinal())
-            btnBlue.setBackgroundColor(Color.BLUE);
+            btnBlue.setImageResource(R.drawable.blubri);
         else{
             resetAllButtonDisplays();
         }
     }
 
     private void resetAllButtonDisplays(){
-        btnGreen.setBackgroundColor(Color.WHITE);
-        btnRed.setBackgroundColor(Color.WHITE);
-        btnYellow.setBackgroundColor(Color.WHITE);
-        btnBlue.setBackgroundColor(Color.WHITE);
+        btnGreen.setImageResource(R.drawable.grndul);
+        btnRed.setImageResource(R.drawable.reddul);
+        btnYellow.setImageResource(R.drawable.yeldul);
+        btnBlue.setImageResource(R.drawable.bludul);
     }
 
     @Override
