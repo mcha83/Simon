@@ -94,6 +94,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             if(!isCorrect){
                 Toast.makeText(this, "Wrong Guess, You Lose", Toast.LENGTH_LONG).show();
+                cancelTimer();
+                cancelSimonRunner();
             }else if(simon.isPlayerTurnOver()){
                 // all guesses where correct, add another to simon
                 simon.addToPattern();

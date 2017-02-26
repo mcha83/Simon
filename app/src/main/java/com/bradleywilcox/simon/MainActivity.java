@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private Button btnHowTo, btnBegin;
+    private Button btnHowTo, btnBegin, btnAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +17,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnHowTo = (Button) findViewById(R.id.btnHowTo);
         btnBegin = (Button) findViewById(R.id.btnBegin);
+        btnAbout = (Button) findViewById(R.id.btnAbout);
 
         btnHowTo.setOnClickListener(this);
         btnBegin.setOnClickListener(this);
+        btnAbout.setOnClickListener(this);
     }
 
     @Override
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, howto.class));
         else if(view == btnBegin)
             startActivity(new Intent(this, GameActivity.class));
+        else if(view == btnAbout)
+            startActivity(new Intent(this, About.class));
 
     }
 }
