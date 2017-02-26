@@ -25,7 +25,7 @@ public class howto extends Activity implements View.OnClickListener{
 
         if(v==back)
         {
-            startActivity(new Intent(this, TestActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
 
         }
     }

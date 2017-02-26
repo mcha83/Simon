@@ -14,7 +14,7 @@ public class About extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        setContentView(R.layout.activity_about);
 
         back = (Button)findViewById(R.id.button5About);
         back.setOnClickListener(this);
@@ -25,7 +25,7 @@ public class About extends Activity implements View.OnClickListener{
 
         if(v==back)
         {
-            startActivity(new Intent(this, TestActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
 
         }
     }
