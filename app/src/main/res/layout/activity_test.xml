@@ -10,12 +10,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/back"
-    tools:context="com.bradleywilcox.simon.TestActivity">
+    tools:context="com.bradleywilcox.simon.GameActivity">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        app:srcCompat="@drawable/simon"
+        app:srcCompat="@drawable/simon_small"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
