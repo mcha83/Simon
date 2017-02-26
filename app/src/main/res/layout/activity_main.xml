@@ -26,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnHowTo"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/btnBegin"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="132dp" />
+        android:layout_marginTop="25dp" />
 
     <Button
         android:text="Begin"
@@ -37,6 +37,6 @@
         android:id="@+id/btnBegin"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp" />
+        android:layout_marginTop="50dp" />
 
 </RelativeLayout>
