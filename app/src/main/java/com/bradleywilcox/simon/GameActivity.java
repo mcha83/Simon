@@ -25,17 +25,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private SimonRunner simonRunner;
     private Timer timer;
     private Player player;
-    MediaPlayer btnClk, btnLose;
+    MediaPlayer btnClk,btnClk2, btnClk3, btnClk4, btnLose, gmStrt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
         btnClk = MediaPlayer.create(this,R.raw.tone);
-        btnLose = MediaPlayer.create(this,R.raw.buzz);
+        btnClk2 = MediaPlayer.create(this, R.raw.tone2);
+        btnClk3 = MediaPlayer.create(this, R.raw.tone3);
+        btnClk4 = MediaPlayer.create(this, R.raw.tone4);
 
+        btnLose = MediaPlayer.create(this,R.raw.buzz);
+        gmStrt = MediaPlayer.create(this, R.raw.intro);
+        gmStrt.start();
+        gmStrt.setLooping(true);
 
         btnGreen = (ImageButton)findViewById(R.id.imageButton);
         btnRed = (ImageButton)findViewById(R.id.imageButton2);
@@ -70,11 +75,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             resetAllButtonDisplays();
             cancelSimonRunner();
 
-            if(btnLose.isPlaying())
-            {
-                btnLose.pause();
-                btnLose.seekTo(0);
-            }
+           soundPause();
 
             if(rbNormal.isChecked()){
                 simon = new Simon(Simon.GameMode.normal);
@@ -95,33 +96,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else {
-            if(btnClk.isPlaying())
-            {
-                btnClk.pause();
-                btnClk.seekTo(0);
-            }
-
+            soundPause();
             boolean isCorrect = false;
 
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
-
                 btnClk.start();
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
-                btnClk.start();
+                btnClk2.start();
             } else if (view == btnYellow) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
-                btnClk.start();
+                btnClk3.start();
             } else if (view == btnBlue) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
-                btnClk.start();
-            } else if (view == btnRed) {
-                isCorrect = simon.isPressCorrect(Simon.Buttons.red);
-            } else if (view == btnYellow) {
-                isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
-            } else if (view == btnBlue) {
-                isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
+                btnClk4.start();
             }
 
             if(!isCorrect){
@@ -129,7 +118,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 cancelTimer();
                 cancelSimonRunner();
 
-                btnClk.pause();
+                soundPause();
                 btnLose.start();
 
             }else if(simon.isPlayerTurnOver()){
@@ -225,6 +214,45 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnRed.setClickable(true);
         btnYellow.setClickable(true);
         btnBlue.setClickable(true);
+    }
+    private void soundPause(){
+
+        if(btnClk.isPlaying())
+        {
+            btnClk.pause();
+            btnClk.seekTo(0);
+        }
+
+        if(btnClk2.isPlaying())
+        {
+            btnClk2.pause();
+            btnClk2.seekTo(0);
+        }
+
+        if(btnClk3.isPlaying())
+        {
+            btnClk3.pause();
+            btnClk3.seekTo(0);
+        }
+
+        if(btnClk4.isPlaying())
+        {
+            btnClk4.pause();
+            btnClk4.seekTo(0);
+        }
+
+        if(btnLose.isPlaying())
+        {
+            btnLose.pause();
+            btnLose.seekTo(0);
+        }
+        if(gmStrt.isPlaying())
+        {
+            gmStrt.pause();;
+            gmStrt.seekTo(0);
+        }
+
+
     }
 
     @Override
