@@ -13,8 +13,8 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Set;
+
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
     ImageButton btnGreen, btnRed, btnYellow, btnBlue;
@@ -32,8 +32,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-         btnClk = MediaPlayer.create(this,R.raw.tone);
+
+        btnClk = MediaPlayer.create(this,R.raw.tone);
         btnLose = MediaPlayer.create(this,R.raw.buzz);
+
 
         btnGreen = (ImageButton)findViewById(R.id.imageButton);
         btnRed = (ImageButton)findViewById(R.id.imageButton2);
@@ -54,7 +56,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnBlue.setOnClickListener(this);
         btnStart.setOnClickListener(this);
 
-
         disableSimonButtons();
 
         player = Player.loadPlayer(this);
@@ -68,12 +69,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if(view == btnStart){
             resetAllButtonDisplays();
             cancelSimonRunner();
+
             if(btnLose.isPlaying())
             {
                 btnLose.pause();
                 btnLose.seekTo(0);
             }
-
 
             if(rbNormal.isChecked()){
                 simon = new Simon(Simon.GameMode.normal);
@@ -104,6 +105,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
+
                 btnClk.start();
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
@@ -114,15 +116,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             } else if (view == btnBlue) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
                 btnClk.start();
+            } else if (view == btnRed) {
+                isCorrect = simon.isPressCorrect(Simon.Buttons.red);
+            } else if (view == btnYellow) {
+                isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
+            } else if (view == btnBlue) {
+                isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
             }
 
             if(!isCorrect){
                 Toast.makeText(this, "Wrong Guess, You Lose", Toast.LENGTH_LONG).show();
                 cancelTimer();
                 cancelSimonRunner();
+
                 btnClk.pause();
                 btnLose.start();
-
 
             }else if(simon.isPlayerTurnOver()){
                 // all guesses where correct, add another to simon
@@ -221,10 +229,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void timerDone(){
-
         btnLose.start();
         Toast.makeText(this, "Time up, YOU LOSE", Toast.LENGTH_LONG).show();
-
     }
 
     @Override
