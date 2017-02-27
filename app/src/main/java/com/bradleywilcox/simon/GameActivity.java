@@ -1,5 +1,7 @@
 package com.bradleywilcox.simon;
 
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Set;
+
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
     ImageButton btnGreen, btnRed, btnYellow, btnBlue;
@@ -21,11 +25,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private SimonRunner simonRunner;
     private Timer timer;
     private Player player;
+    MediaPlayer btnClk, btnLose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+
+        btnClk = MediaPlayer.create(this,R.raw.tone);
+        btnLose = MediaPlayer.create(this,R.raw.buzz);
+
 
         btnGreen = (ImageButton)findViewById(R.id.imageButton);
         btnRed = (ImageButton)findViewById(R.id.imageButton2);
@@ -60,6 +70,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             resetAllButtonDisplays();
             cancelSimonRunner();
 
+            if(btnLose.isPlaying())
+            {
+                btnLose.pause();
+                btnLose.seekTo(0);
+            }
+
             if(rbNormal.isChecked()){
                 simon = new Simon(Simon.GameMode.normal);
             }
@@ -79,11 +95,27 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else {
+            if(btnClk.isPlaying())
+            {
+                btnClk.pause();
+                btnClk.seekTo(0);
+            }
 
             boolean isCorrect = false;
 
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
+
+                btnClk.start();
+            } else if (view == btnRed) {
+                isCorrect = simon.isPressCorrect(Simon.Buttons.red);
+                btnClk.start();
+            } else if (view == btnYellow) {
+                isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
+                btnClk.start();
+            } else if (view == btnBlue) {
+                isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
+                btnClk.start();
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
             } else if (view == btnYellow) {
@@ -96,6 +128,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Wrong Guess, You Lose", Toast.LENGTH_LONG).show();
                 cancelTimer();
                 cancelSimonRunner();
+
+                btnClk.pause();
+                btnLose.start();
+
             }else if(simon.isPlayerTurnOver()){
                 // all guesses where correct, add another to simon
                 simon.addToPattern();
@@ -193,6 +229,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void timerDone(){
+        btnLose.start();
         Toast.makeText(this, "Time up, YOU LOSE", Toast.LENGTH_LONG).show();
     }
 
@@ -207,6 +244,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         cancelSimonRunner();
         cancelTimer();
+
         player.Save(this);
     }
 }
