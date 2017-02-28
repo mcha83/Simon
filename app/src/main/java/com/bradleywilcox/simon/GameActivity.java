@@ -222,31 +222,27 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             btnClk.pause();
             btnClk.seekTo(0);
         }
-
-        if(btnClk2.isPlaying())
+        else if(btnClk2.isPlaying())
         {
             btnClk2.pause();
             btnClk2.seekTo(0);
         }
-
-        if(btnClk3.isPlaying())
+        else if(btnClk3.isPlaying())
         {
             btnClk3.pause();
             btnClk3.seekTo(0);
         }
-
-        if(btnClk4.isPlaying())
+        else if(btnClk4.isPlaying())
         {
             btnClk4.pause();
             btnClk4.seekTo(0);
         }
-
-        if(btnLose.isPlaying())
+        else if(btnLose.isPlaying())
         {
             btnLose.pause();
             btnLose.seekTo(0);
         }
-        if(gmStrt.isPlaying())
+        else if(gmStrt.isPlaying())
         {
             gmStrt.pause();;
             gmStrt.seekTo(0);
