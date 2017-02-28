@@ -4,5 +4,6 @@
 Repeat these two signals by pressing the same lenses. SIMON will duplicate these first two signals and add one.Continue in this manner as long as you can repeat each se-quence of signals correctly.
 Notice that after the 5th, 9th and 13th signals in a sequence, SIMON automatically increases the tempo. If you fail to repeat a sequence exactly or if you take more than 5 seconds to repeat a signal, SIMON responds with a
 "RAZZ" sound; you have lost, and this sequence of signals is over.  </string>
-    <string name="about">Michael Cha\nBradley Wilcox\n\nImages were created using Adobe Photoshop </string>
+    <string name="about">Michael Cha\nBradley Wilcox\n\nImages were created using Adobe Photoshop\n\n
+                        Sounds were provided by soundbible.com</string>
 </resources>

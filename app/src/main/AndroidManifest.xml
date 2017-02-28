@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".howto" />
         <activity android:name=".GameActivity" />
-        <activity android:name=".About"></activity>
+        <activity android:name=".About"/>
     </application>
 
 </manifest>
