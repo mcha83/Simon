@@ -1,5 +1,6 @@
 package com.bradleywilcox.simon;
 
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.AsyncTask;
@@ -13,7 +14,10 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.HashSet;
 import java.util.Set;
+import java.util.jar.Attributes;
 
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener, ISimonActivity{
@@ -25,22 +29,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private SimonRunner simonRunner;
     private Timer timer;
     private Player player;
-    MediaPlayer btnClk,btnClk2, btnClk3, btnClk4, btnLose, gmStrt;
+
+    private SoundPool soundPool;
+    private Set<Integer> soundsLoaded;
+    private int soundGreenId, soundRedId, soundYellowId, soundBlueId, soundLoseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        btnClk = MediaPlayer.create(this,R.raw.tone);
-        btnClk2 = MediaPlayer.create(this, R.raw.tone2);
-        btnClk3 = MediaPlayer.create(this, R.raw.tone3);
-        btnClk4 = MediaPlayer.create(this, R.raw.tone4);
-
-        btnLose = MediaPlayer.create(this,R.raw.buzz);
-        gmStrt = MediaPlayer.create(this, R.raw.intro);
-        gmStrt.start();
-        gmStrt.setLooping(true);
+        soundsLoaded = new HashSet<Integer>();
 
         btnGreen = (ImageButton)findViewById(R.id.imageButton);
         btnRed = (ImageButton)findViewById(R.id.imageButton2);
@@ -75,8 +74,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             resetAllButtonDisplays();
             cancelSimonRunner();
 
-           soundPause();
-
             if(rbNormal.isChecked()){
                 simon = new Simon(Simon.GameMode.normal);
             }
@@ -96,30 +93,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         else {
-            soundPause();
             boolean isCorrect = false;
 
             if (view == btnGreen) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.green);
-                btnClk.start();
+                soundPool.play(soundGreenId, 1.0f, 1.0f, 0, 0, 1.0f);
             } else if (view == btnRed) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.red);
-                btnClk2.start();
+                soundPool.play(soundRedId, 1.0f, 1.0f, 0, 0, 1.0f);
             } else if (view == btnYellow) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.yellow);
-                btnClk3.start();
+                soundPool.play(soundYellowId, 1.0f, 1.0f, 0, 0, 1.0f);
             } else if (view == btnBlue) {
                 isCorrect = simon.isPressCorrect(Simon.Buttons.blue);
-                btnClk4.start();
+                soundPool.play(soundBlueId, 1.0f, 1.0f, 0, 0, 1.0f);
             }
 
             if(!isCorrect){
+                disableSimonButtons();
                 Toast.makeText(this, "Wrong Guess, You Lose", Toast.LENGTH_LONG).show();
                 cancelTimer();
                 cancelSimonRunner();
 
-                soundPause();
-                btnLose.start();
+                soundPool.play(soundLoseId, 1.0f, 1.0f, 0, 0, 1.0f);
 
             }else if(simon.isPlayerTurnOver()){
                 // all guesses where correct, add another to simon
@@ -182,15 +178,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void updateButtons(int button) {
-        if(button == Simon.Buttons.green.ordinal())
+        if(button == Simon.Buttons.green.ordinal()) {
             btnGreen.setImageResource(R.drawable.grnbri);
-        else if(button == Simon.Buttons.red.ordinal())
+            soundPool.play(soundGreenId, 1.0f, 1.0f, 0, 0, 1.0f);
+        }else if(button == Simon.Buttons.red.ordinal()) {
             btnRed.setImageResource(R.drawable.redbri);
-        else if(button == Simon.Buttons.yellow.ordinal())
+            soundPool.play(soundRedId, 1.0f, 1.0f, 0, 0, 1.0f);
+        }else if(button == Simon.Buttons.yellow.ordinal()) {
             btnYellow.setImageResource(R.drawable.yelbri);
-        else if(button == Simon.Buttons.blue.ordinal())
+            soundPool.play(soundYellowId, 1.0f, 1.0f, 0, 0, 1.0f);
+        }else if(button == Simon.Buttons.blue.ordinal()) {
             btnBlue.setImageResource(R.drawable.blubri);
-        else{
+            soundPool.play(soundBlueId, 1.0f, 1.0f, 0, 0, 1.0f);
+        }else{
             resetAllButtonDisplays();
         }
     }
@@ -215,46 +215,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         btnYellow.setClickable(true);
         btnBlue.setClickable(true);
     }
-    private void soundPause(){
-
-        if(btnClk.isPlaying())
-        {
-            btnClk.pause();
-            btnClk.seekTo(0);
-        }
-        else if(btnClk2.isPlaying())
-        {
-            btnClk2.pause();
-            btnClk2.seekTo(0);
-        }
-        else if(btnClk3.isPlaying())
-        {
-            btnClk3.pause();
-            btnClk3.seekTo(0);
-        }
-        else if(btnClk4.isPlaying())
-        {
-            btnClk4.pause();
-            btnClk4.seekTo(0);
-        }
-        else if(btnLose.isPlaying())
-        {
-            btnLose.pause();
-            btnLose.seekTo(0);
-        }
-        else if(gmStrt.isPlaying())
-        {
-            gmStrt.pause();;
-            gmStrt.seekTo(0);
-        }
-
-
-    }
 
     @Override
     public void timerDone(){
-        btnLose.start();
-        Toast.makeText(this, "Time up, YOU LOSE", Toast.LENGTH_LONG).show();
+        disableSimonButtons();
+        soundPool.play(soundLoseId, 1.0f, 1.0f, 0, 0, 1.0f);
+        Toast.makeText(this, "Time up, You Lose", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -270,5 +236,42 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cancelTimer();
 
         player.Save(this);
+
+        if(soundPool != null){
+            soundPool.release();
+            soundPool = null;
+
+            soundsLoaded.clear();
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
+        attrBuilder.setUsage(AudioAttributes.USAGE_GAME);
+
+        SoundPool.Builder spBuilder = new SoundPool.Builder();
+        spBuilder.setAudioAttributes(attrBuilder.build());
+        spBuilder.setMaxStreams(2);
+        soundPool = spBuilder.build();
+
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener(){
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status){
+                if(status == 0){
+                    soundsLoaded.add(sampleId);
+                }else{
+
+                }
+            }
+        });
+
+        soundGreenId = soundPool.load(this, R.raw.tone, 1);
+        soundRedId = soundPool.load(this, R.raw.tone2, 1);
+        soundYellowId = soundPool.load(this, R.raw.tone3, 1);
+        soundBlueId = soundPool.load(this, R.raw.tone4, 1);
+        soundLoseId = soundPool.load(this, R.raw.buzz, 1);
     }
 }

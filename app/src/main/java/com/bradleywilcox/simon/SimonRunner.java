@@ -20,11 +20,11 @@ public class SimonRunner extends AsyncTask<Void, Integer, Void> {
         this.activity = activity;
         this.simon = simon;
         if(simon.getGameMode() == Simon.GameMode.turbo){
-            buttonOnTime = 250;
-            buttonOffTime = 125;
+            buttonOnTime = 125;
+            buttonOffTime = 75;
         }else{
-            buttonOnTime = 1000;
-            buttonOffTime = 500;
+            buttonOnTime = 500;
+            buttonOffTime = 250;
         }
     }
 
