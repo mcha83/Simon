@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         gmStrt2 = MediaPlayer.create(this, R.raw.intro);
         gmStrt2.start();
-        gmStrt2.setLooping(true);
+
     }
 
     @Override
@@ -41,5 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(view == btnAbout)
             startActivity(new Intent(this, About.class));
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+        gmStrt2.release();
     }
 }

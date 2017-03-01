@@ -110,6 +110,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             if(!isCorrect){
+                disableSimonButtons();
                 Toast.makeText(this, "Wrong Guess, You Lose", Toast.LENGTH_LONG).show();
                 cancelTimer();
                 cancelSimonRunner();
@@ -217,6 +218,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void timerDone(){
+        disableSimonButtons();
         soundPool.play(soundLoseId, 1.0f, 1.0f, 0, 0, 1.0f);
         Toast.makeText(this, "Time up, You Lose", Toast.LENGTH_LONG).show();
     }
@@ -234,6 +236,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cancelTimer();
 
         player.Save(this);
+
+        if(soundPool != null){
+            soundPool.release();
+            soundPool = null;
+
+            soundsLoaded.clear();
+        }
     }
 
     @Override
